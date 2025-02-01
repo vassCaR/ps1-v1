@@ -9,6 +9,8 @@ namespace ps1_v1
     internal class Graphe
     {
         //graphe simple G(V,E)
+        // V est l'ensemble des sommets du graphe G
+        // E est l'ensemble des liaisons/arêtes du graphe G
         private List<Noeud> v;
         private List<Lien> e;
 
