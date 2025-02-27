@@ -2,6 +2,14 @@
 {
     internal class Program
     {
+
+        static void AfficherSalem(int n)
+        {
+            for (int i=0;i<n;i++)
+            {
+                Console.Write("salem ");
+            }
+        }
         static void Main(string[] args)
         {
             // Création des nœuds
@@ -23,6 +31,7 @@
             n3.AjouterLien(l2);
             Graphe graphe = new Graphe(V,E);
             graphe.AfficherMatriceAdjacence();
+            //GrapheRenderer.Afficher(graphe);
         }
     }
 }
