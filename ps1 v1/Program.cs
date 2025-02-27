@@ -24,7 +24,7 @@
             n3.AjouterLien(l2);
             Graphe graphe = new Graphe(V,E);
             graphe.AfficherMatriceAdjacence();
-            //GrapheRenderer.Afficher(graphe);
+            
         }
     }
 }

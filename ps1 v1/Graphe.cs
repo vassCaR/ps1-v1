@@ -40,7 +40,7 @@ namespace ps1_v1
             {
                 for (int j = 0; j < n; j++)
                 {
-                    mat[i, j] = Lien_Existe(noeuds[i], noeuds[j]);//si la relation existe , on met dasn dans la case [i,j] de la matrice d'adjacence
+                    mat[i, j] = Lien_Existe(noeuds[i], noeuds[j]);//si la relation existe , on met 1 dans la case [i,j] de la matrice d'adjacence
                 }
             }
             return mat;
