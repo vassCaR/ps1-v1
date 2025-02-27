@@ -3,13 +3,6 @@
     internal class Program
     {
 
-        static void AfficherSalem(int n)
-        {
-            for (int i=0;i<n;i++)
-            {
-                Console.Write("salem ");
-            }
-        }
         static void Main(string[] args)
         {
             // Création des nœuds
