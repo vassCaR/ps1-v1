@@ -3,11 +3,18 @@ using System.Diagnostics;
 
 namespace ps1_v1
 {
+    /// <summary>
+    /// Classe statique pour visualiser un graphe en utilisant SkiaSharp.
+    /// </summary>
     public static class GraphVisualizer
     {
+        /// <summary>
+        /// Génère et sauvegarde une image du graphe donné.
+        /// </summary>
+        /// <param name="graphe">Le graphe à visualiser.</param>
+        /// <param name="filePath">Le chemin du fichier pour sauvegarder l'image.</param>
         public static void Visualize(Graphe graphe, string filePath)
         {
-            // Augmenter la taille pour un plus grand graphe
             const int width = 1200;
             const int height = 1200;
             const float margin = 100;
@@ -29,10 +36,14 @@ namespace ps1_v1
             {
                 data.SaveTo(stream);
             }
-            // Ensure file is completely written before opening
+
             OpenImage(filePath);
         }
 
+        /// <summary>
+        /// Ouvre l'image générée en fonction du système d'exploitation.
+        /// </summary>
+        /// <param name="filePath">Le chemin de l'image à ouvrir.</param>
         private static void OpenImage(string filePath)
         {
             try
@@ -46,7 +57,7 @@ namespace ps1_v1
                     {
                         var startInfo = new ProcessStartInfo
                         {
-                            FileName = "feh",  // Using feh as it's more lightweight
+                            FileName = "feh",
                             Arguments = $"--scale-down --auto-zoom \"{fullPath}\"",
                             UseShellExecute = false,
                             RedirectStandardError = false,
@@ -66,8 +77,7 @@ namespace ps1_v1
                         Console.WriteLine("Installation de feh nécessaire.");
                         Console.WriteLine("Utilisez la commande:");
                         Console.WriteLine("sudo apt-get install feh");
-                        
-                        // Try to open file manager as fallback
+
                         try
                         {
                             Process.Start(new ProcessStartInfo
@@ -109,6 +119,14 @@ namespace ps1_v1
             }
         }
 
+        /// <summary>
+        /// Calcule les positions des nœuds pour un agencement circulaire.
+        /// </summary>
+        /// <param name="width">Largeur de l'image.</param>
+        /// <param name="height">Hauteur de l'image.</param>
+        /// <param name="margin">Marge autour des nœuds.</param>
+        /// <param name="nodes">Liste des nœuds du graphe.</param>
+        /// <returns>Un dictionnaire associant chaque nœud à sa position.</returns>
         private static Dictionary<Noeud, SKPoint> CalculateNodePositions(int width, int height, float margin, List<Noeud> nodes)
         {
             var positions = new Dictionary<Noeud, SKPoint>();
@@ -126,13 +144,19 @@ namespace ps1_v1
             return positions;
         }
 
+        /// <summary>
+        /// Dessine les arêtes du graphe sur le canvas.
+        /// </summary>
+        /// <param name="canvas">Le canvas sur lequel dessiner.</param>
+        /// <param name="positions">Les positions des nœuds.</param>
+        /// <param name="liens">La liste des arêtes.</param>
         private static void DrawConnections(SKCanvas canvas, Dictionary<Noeud, SKPoint> positions, List<Lien> liens)
         {
-            using var edgePaint = new SKPaint 
-            { 
-                Color = SKColors.Black, 
-                StrokeWidth = 2, 
-                IsAntialias = true 
+            using var edgePaint = new SKPaint
+            {
+                Color = SKColors.Black,
+                StrokeWidth = 2,
+                IsAntialias = true
             };
 
             foreach (var lien in liens)
@@ -143,24 +167,29 @@ namespace ps1_v1
             }
         }
 
+        /// <summary>
+        /// Dessine les nœuds du graphe sur le canvas.
+        /// </summary>
+        /// <param name="canvas">Le canvas sur lequel dessiner.</param>
+        /// <param name="positions">Les positions des nœuds.</param>
         private static void DrawNodes(SKCanvas canvas, Dictionary<Noeud, SKPoint> positions)
         {
-            using var nodePaint = new SKPaint 
-            { 
-                Color = SKColors.LightBlue, 
-                IsAntialias = true 
+            using var nodePaint = new SKPaint
+            {
+                Color = SKColors.LightBlue,
+                IsAntialias = true
             };
-            using var textPaint = new SKPaint 
-            { 
-                Color = SKColors.Black, 
-                TextSize = 14, // Réduire la taille du texte
-                TextAlign = SKTextAlign.Center, 
-                IsAntialias = true 
+            using var textPaint = new SKPaint
+            {
+                Color = SKColors.Black,
+                TextSize = 14,
+                TextAlign = SKTextAlign.Center,
+                IsAntialias = true
             };
 
             foreach (var (node, pos) in positions)
             {
-                canvas.DrawCircle(pos, 15, nodePaint); // Réduire la taille des cercles
+                canvas.DrawCircle(pos, 15, nodePaint);
                 canvas.DrawText(node.Id.ToString(), pos.X, pos.Y + 5, textPaint);
             }
         }
