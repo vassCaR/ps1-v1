@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ps1_v1
 {
-    internal class Lien
+    public class Lien
     {
         // Noeuds connectés par ce lien
         public Noeud Noeud1 { get; set; }
